@@ -43,7 +43,7 @@ function Header() {
 
       <div className="flex justify-center flex-grow">
         <div className="flex space-x-6 md:space-x-2">
-          <HeaderIcon active Icon={HomeIcon} active></HeaderIcon>
+          <HeaderIcon active Icon={HomeIcon}></HeaderIcon>
           <HeaderIcon Icon={PlayIcon}></HeaderIcon>
           <HeaderIcon Icon={ShoppingCartIcon}></HeaderIcon>
           <HeaderIcon Icon={UserGroupIcon}></HeaderIcon>

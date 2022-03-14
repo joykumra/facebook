@@ -6,6 +6,7 @@ import { query, orderBy } from "firebase/firestore";
 import Post from "./Post";
 
 function Posts() {
+  // GETTING RELATIME DATA FROM DB
   const [value, loading, error] = useCollection(
     query(collection(db, "data"), orderBy("timestamp", "desc"))
   );

@@ -9,7 +9,6 @@ import {
 import {
   collection,
   addDoc,
-  Timestamp,
   serverTimestamp,
   setDoc,
   doc,
@@ -29,6 +28,7 @@ function InputBox() {
 
     if (!inpuRef.current.value) return;
 
+    // AUTHENTICATION DATA TO BE STORED IN FIREBASE DB
     const data = {
       message: inpuRef.current.value,
       name: session.user.name,
@@ -37,8 +37,10 @@ function InputBox() {
       timestamp: serverTimestamp(),
     };
 
+    // ADD DOCUMENT TO COLLECTION AND STORING DATA IN DB
     const docRef = await addDoc(collection(db, "data"), data);
 
+    // STORING IMAGES IN FIREBASE STORAGE
     if (imageToPost) {
       const storageRef = ref(storage, `posts/${docRef.id}`);
 
@@ -50,7 +52,7 @@ function InputBox() {
       // GET IMAGE URL FROM FIREBASE STORAGE
       const url = await getDownloadURL(storageRef, (err) => console.log(err));
 
-      // STORE IMAGE IN DATA COLLECTION
+      // PUSH STORED IMAGE IN FIREBASE DB
       await setDoc(
         doc(db, "data", docRef.id),
         {
