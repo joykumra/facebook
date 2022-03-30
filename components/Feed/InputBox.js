@@ -18,7 +18,7 @@ import { db, storage } from "../../firebase";
 
 function InputBox() {
   const { data: session } = useSession();
-  const inpuRef = useRef(null);
+  const inputRef = useRef(null);
   const imageRef = useRef(null);
 
   const [imageToPost, setImageToPost] = useState(null);
@@ -26,21 +26,21 @@ function InputBox() {
   const postSubmitHandler = async (e) => {
     e.preventDefault();
 
-    if (!inpuRef.current.value) return;
+    if (!inputRef.current.value) return;
 
     // AUTHENTICATION DATA TO BE STORED IN FIREBASE DB
     const data = {
-      message: inpuRef.current.value,
+      message: inputRef.current.value,
       name: session.user.name,
       email: session.user.email,
       image: session.user.image,
       timestamp: serverTimestamp(),
     };
 
-    // ADD DOCUMENT TO COLLECTION AND STORING DATA IN DB
+    // ADD DOCUMENT TO COLLECTION AND STORING DATA IN DB ( LIKE MODELS IN NODE JS )
     const docRef = await addDoc(collection(db, "data"), data);
 
-    // STORING IMAGES IN FIREBASE STORAGE
+    // STORING IMAGES IN FIREBASE STORAGE ( LIKE MULTER IN NODE JS )
     if (imageToPost) {
       const storageRef = ref(storage, `posts/${docRef.id}`);
 
@@ -62,7 +62,7 @@ function InputBox() {
       );
     }
 
-    inpuRef.current.value = "";
+    inputRef.current.value = "";
   };
 
   const addImageToPostHandler = (e) => {
@@ -97,7 +97,7 @@ function InputBox() {
             className="flex-grow rounded-full h-12 px-5 bg-gray-100 focus:outline-none"
             type="text"
             placeholder={`What's on your mind, ${session.user.name}`}
-            ref={inpuRef}
+            ref={inputRef}
           ></input>
           <button hidden type="submit" onClick={postSubmitHandler}>
             Submit
